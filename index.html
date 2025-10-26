@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, viewport-fit=cover"
+    />
+    <title>Borne Monoprix</title>
+
+    <!-- Tailwind (CDN, buildless) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              primary: "#6b21a8",
+              surface: "#ffffff",
+              ink: "#222222",
+              purple: "#9333EA",
+              green: "#22C55E",
+              red: "#EF4444",
+            },
+            borderRadius: {
+              xl2: "1rem",
+            },
+          },
+        },
+      };
+    </script>
+
+    <!-- Utilitaire pour le format portrait -->
+    <style>
+      .aspect-9-16 {
+        aspect-ratio: 9 / 16;
+      }
+      
+      /* Blur uniquement sur le contenu principal quand modal active */
+      .modal-active #app {
+        filter: blur(4px);
+        pointer-events: none;
+      }
+    </style>
+  </head>
+
+  <body class="min-h-screen bg-neutral-100 text-ink">
+
+    <!-- === CADRE DE BORNE (ratio 9/16) === -->
+    <div class="min-h-screen flex items-center justify-center">
+      <div
+        id="app-frame"
+        class="aspect-9-16 w-[min(100vw,56.25vh)]
+               bg-transparent rounded-xl2 shadow-xl overflow-hidden
+               flex flex-col relative z-10"
+      >
+        <!-- NAVBAR -->
+        <header id="header" class="shrink-0"></header>
+
+        <!-- CONTENU PRINCIPAL -->
+        <main id="app" class="flex-1 overflow-y-auto pt-[9vh]"></main>
+
+        <!-- FOOTER -->
+        <footer id="footer" class="shrink-0"></footer>
+      </div>
+    </div>
+
+    <!-- === APP PRINCIPALE (Modules ES natifs) === -->
+    <script type="module" src="./app.js"></script>
+  </body>
+</html>

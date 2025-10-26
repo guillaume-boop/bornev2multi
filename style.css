@@ -1,0 +1,57 @@
+/* === THEME GLOBAL - TicketEasy.Tech === */
+:root {
+  /* --- Couleurs principales --- */
+  --color-primary: #6b21a8;   /* violet principal */
+  --color-primary-dark: #581c87;
+  --color-accent-blue: #2563eb;
+  --color-accent-red: #dc2626;
+
+  /* --- Couleurs neutres --- */
+  --color-bg: #ffffff;
+  --color-surface: #f5f5f5;
+  --color-border: #e5e7eb;
+  --color-text: #111827;
+
+  /* --- Typo & layout --- */
+  --radius: 1rem;
+  --shadow: 0 0 20px rgba(0,0,0,0.08);
+}
+
+/* === Styles généraux === */
+body {
+  background: var(--color-bg);
+  color: var(--color-text);
+  font-family: 'Inter', sans-serif;
+}
+
+h1, h2, h3, h4 {
+  color: var(--color-text);
+  font-weight: 700;
+}
+
+button {
+  font-family: inherit;
+  border-radius: var(--radius);
+}
+
+/* === Classes utilitaires globales (compatibles Tailwind) === */
+.bg-primary {
+  background-color: var(--color-primary) !important;
+}
+
+.bg-primary-dark {
+  background-color: var(--color-primary-dark) !important;
+}
+
+.text-primary {
+  color: var(--color-primary) !important;
+}
+
+.border-primary {
+  border-color: var(--color-primary) !important;
+}
+
+/* Optionnel : effets */
+.shadow-theme {
+  box-shadow: var(--shadow);
+}
