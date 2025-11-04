@@ -1,3 +1,5 @@
+import { Button } from './Button.js';
+
 export function FooterActions({
   onCancel = () => (window.location.hash = "home"),
   onConfirm = () => (window.location.hash = "recap"),
@@ -16,50 +18,34 @@ export function FooterActions({
   `;
 
   // === Bouton "Abandonner la commande" ===
-  const cancelBtn = document.createElement("button");
-  cancelBtn.className = `
-    w-[42%] h-[5.8vh]
-    rounded-[1vh]
-    bg-red/90 text-white
-    flex items-center justify-center gap-[0.8vh]
-    text-[1.6vh] font-semibold
-    hover:bg-red/100 active:scale-95
-    transition-all duration-150
-  `;
-  cancelBtn.innerHTML = `
-    <svg xmlns="http://www.w3.org/2000/svg"
-         class="w-[1.8vh] h-[1.8vh]"
-         fill="none" viewBox="0 0 24 24"
-         stroke="currentColor" stroke-width="2">
-      <path stroke-linecap="round" stroke-linejoin="round"
-        d="M6 18L18 6M6 6l12 12" />
-    </svg>
-    <span>ABANDONNER</span>
-  `;
-  cancelBtn.onclick = onCancel;
+  const cancelBtn = Button({
+    children: "ABANDONNER",
+    variant: "danger",
+    className: "w-[42%] h-[5.8vh]",
+    icon: `<svg xmlns="http://www.w3.org/2000/svg"
+           class="w-[1.8vh] h-[1.8vh]"
+           fill="none" viewBox="0 0 24 24"
+           stroke="currentColor" stroke-width="2">
+        <path stroke-linecap="round" stroke-linejoin="round"
+          d="M6 18L18 6M6 6l12 12" />
+      </svg>`,
+    onClick: onCancel
+  });
 
   // === Bouton "Confirmer la commande" ===
-  const confirmBtn = document.createElement("button");
-  confirmBtn.className = `
-    w-[42%] h-[5.8vh]
-    rounded-[1vh]
-    bg-green/90 text-white
-    flex items-center justify-center gap-[0.8vh]
-    text-[1.6vh] font-semibold
-    hover:bg-green/100 active:scale-95
-    transition-all duration-150 shadow-md
-  `;
-  confirmBtn.innerHTML = `
-    <svg xmlns="http://www.w3.org/2000/svg"
+  const confirmBtn = Button({
+    children: "VALIDER",
+    variant: "success",
+    className: "w-[42%] h-[5.8vh] shadow-md",
+    icon: `<svg xmlns="http://www.w3.org/2000/svg"
          class="w-[1.8vh] h-[1.8vh]"
          fill="none" viewBox="0 0 24 24"
          stroke="currentColor" stroke-width="2">
       <path stroke-linecap="round" stroke-linejoin="round"
         d="M5 13l4 4L19 7" />
-    </svg>
-    <span>CONFIRMER</span>
-  `;
-  confirmBtn.onclick = onConfirm;
+    </svg>`,
+    onClick: onConfirm
+  });
 
   footer.append(cancelBtn, confirmBtn);
   return footer;

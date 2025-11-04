@@ -1,57 +1,134 @@
-/* === THEME GLOBAL - TicketEasy.Tech === */
+/* === THEME GLOBAL - centralized variables & utilities === */
 :root {
-  /* --- Couleurs principales --- */
-  --color-primary: #6b21a8;   /* violet principal */
-  --color-primary-dark: #581c87;
-  --color-accent-blue: #2563eb;
-  --color-accent-red: #dc2626;
+  /* Colors */
+  --color-primary: #6b21a8; /* violet */
+  --color-primary-600: #7c3aed;
+  --color-success: #7CE07A;
+  --color-danger: #DC2626;
+  --color-white: #ffffff;
+  --color-black: #111827;
+  --color-surface: #F3F4F6;
+  --color-border: #E5E7EB;
+  --color-overlay: rgba(0,0,0,0.3);
 
-  /* --- Couleurs neutres --- */
-  --color-bg: #ffffff;
-  --color-surface: #f5f5f5;
-  --color-border: #e5e7eb;
-  --color-text: #111827;
+  /* Spacing (use vh units consistently in this UI) */
+  --space-xs: 0.6vh;
+  --space-sm: 1vh;
+  --space-md: 1.6vh;
+  --space-lg: 2vh;
+  --space-xl: 2.6vh;
 
-  /* --- Typo & layout --- */
-  --radius: 1rem;
-  --shadow: 0 0 20px rgba(0,0,0,0.08);
+  /* Radiuses */
+  --radius-sm: 0.8vh;
+  --radius-md: 1.2vh;
+  --radius-lg: 1.6vh;
+  --radius-xl: 2.5vh;
+  --radius-full: 9999px;
+
+  /* Typography */
+  --text-xs: 1.4vh;
+  --text-sm: 1.6vh;
+  --text-md: 1.8vh;
+  --text-lg: 2vh;
+  --text-xl: 2.4vh;
+  --text-2xl: 3vh;
+
+  /* Shadows */
+  --shadow-sm: 0 1px 2px rgba(0,0,0,0.06);
+  --shadow-md: 0 6px 12px rgba(0,0,0,0.08);
 }
 
-/* === Styles généraux === */
+/* === Base styles === */
 body {
-  background: var(--color-bg);
-  color: var(--color-text);
-  font-family: 'Inter', sans-serif;
+  background: var(--color-white);
+  color: var(--color-black);
+  font-family: Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
 }
 
-h1, h2, h3, h4 {
-  color: var(--color-text);
-  font-weight: 700;
+h1, h2, h3, h4 { font-weight: 700; }
+
+button { font-family: inherit; }
+
+/* === Utilities & component-like helpers === */
+.bg-primary { background-color: var(--color-primary) !important; }
+.text-primary { color: var(--color-primary) !important; }
+.bg-success { background-color: var(--color-success) !important; }
+.text-success { color: var(--color-success) !important; }
+.bg-danger { background-color: var(--color-danger) !important; }
+.text-danger { color: var(--color-danger) !important; }
+.bg-surface { background-color: var(--color-surface) !important; }
+.border { border: 1px solid var(--color-border); }
+
+.w-fit { width: -moz-fit-content; width: fit-content; }
+
+/* Shadows */
+.shadow-sm { box-shadow: var(--shadow-sm); }
+.shadow-md { box-shadow: var(--shadow-md); }
+
+/* === Buttons (usable via className or via ui/Button.js) === */
+.btn {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: var(--space-sm) !important;
+  border: none !important;
+  cursor: pointer !important;
+  border-radius: var(--radius-md) !important;
+  transition: transform .08s ease, box-shadow .12s ease !important;
+  font-weight: 600 !important;
+  padding: 0.75rem 1.5rem !important;
+}
+.btn:active { transform: scale(.98) !important; }
+
+.btn--primary { 
+  background-color: var(--color-primary) !important; 
+  color: var(--color-white) !important; 
+}
+.btn--success { 
+  background-color: var(--color-success) !important; 
+  color: var(--color-white) !important; 
+}
+.btn--danger { 
+  background-color: var(--color-danger) !important; 
+  color: var(--color-white) !important; 
+}
+.btn--ghost { 
+  background-color: transparent !important; 
+  color: var(--color-black) !important; 
+  border: 1px solid var(--color-border) !important; 
 }
 
-button {
-  font-family: inherit;
-  border-radius: var(--radius);
+.btn--sm { 
+  font-size: var(--text-sm) !important; 
+  padding: calc(var(--space-xs)) calc(var(--space-sm)) !important; 
+}
+.btn--md { 
+  font-size: var(--text-lg) !important; 
+  padding: calc(var(--space-sm) + 2px) calc(var(--space-md)) !important; 
+}
+.btn--lg { 
+  font-size: var(--text-xl) !important; 
+  padding: calc(var(--space-md)) calc(var(--space-lg)) !important; 
 }
 
-/* === Classes utilitaires globales (compatibles Tailwind) === */
-.bg-primary {
-  background-color: var(--color-primary) !important;
+/* Full-width helper for buttons */
+.btn--full { 
+  width: 100% !important; 
 }
 
-.bg-primary-dark {
-  background-color: var(--color-primary-dark) !important;
-}
+/* Small utility for rounded full (used for floating close buttons) */
+.rounded-full { border-radius: var(--radius-full); }
 
-.text-primary {
-  color: var(--color-primary) !important;
-}
+/* Modal overlay helper */
+.overlay { position: fixed; inset: 0; background: var(--color-overlay); z-index: 150; }
 
-.border-primary {
-  border-color: var(--color-primary) !important;
-}
+/* Modal inner helpers */
+.modal-centered { position: absolute; top: 10vh; left: 50%; transform: translateX(-50%); width: 90vw; max-width: 95vw; background: var(--color-white); border-radius: var(--radius-xl); overflow: hidden; }
 
-/* Optionnel : effets */
-.shadow-theme {
-  box-shadow: var(--shadow);
+/* Product card helper used in Recap/cart */
+.product-row { display:flex; align-items:center; gap: var(--space-lg); background: var(--color-surface); border-radius: var(--radius-lg); padding: var(--space-lg); }
+
+/* small responsive tweaks */
+@media (min-width: 900px) {
+  .modal-centered { width: 50vw; }
 }

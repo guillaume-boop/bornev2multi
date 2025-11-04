@@ -2,7 +2,10 @@ import { Navbar } from "./ui/Navbar.js";
 import { Background } from "./ui/Background.js";
 import { FooterActions } from "./ui/FooterActions.js";
 import { CategorySidebar } from "./ui/CategorySidebar.js";
-// import { ProductModal } from "./components/Modals/ProductModal.js";
+import { ProductModal } from "./components/Modals/ProductModal.js";
+import { state } from "./state.js";
+import { Recap } from "./components/Recap.js";
+import { Cart } from "./components/Cart.js";
 
 console.log("charge", CategorySidebar);
 
@@ -49,7 +52,7 @@ function renderProductGrid(list = []) {
   }
 
   const grid = document.createElement("div");
-  grid.className = "grid grid-cols-2 gap-[3vh]";
+  grid.className = "grid grid-cols-2 gap-[3vh] pl-[12vh]";
 
   list.forEach((p) => {
     const card = document.createElement("button");
@@ -62,7 +65,7 @@ function renderProductGrid(list = []) {
     const img = document.createElement("img");
     img.src = p.image_url || "https://via.placeholder.com/200x200?text=Produit";
     img.alt = p.nom;
-    img.className = "w-full h-[20vh] object-contain bg-[#F3F3F3]";
+    img.className = "w-full h-[20vh] object-contain bg-[#00000] border-b border-gray-300";
 
     const name = document.createElement("p");
     name.textContent = p.nom;
@@ -76,8 +79,12 @@ function renderProductGrid(list = []) {
 
     card.append(img, name, price);
 
-    // futur : ouverture du ProductModal
-    // card.onclick = () => document.body.appendChild(ProductModal(p));
+    // ouverture du ProductModal pour le produit courant
+    // pass the full products list (if loaded) so the modal can compute similar products
+    card.onclick = () =>
+      document.body.appendChild(
+        ProductModal(p, _productsCache && _productsCache.produits ? _productsCache.produits : [])
+      );
 
     grid.appendChild(card);
   });
@@ -145,6 +152,33 @@ async function loadAndRenderCategory(catId) {
 
 // === INITIALISATION ===
 function boot() {
+  // load persisted cart first so components listening to cart:updated get initial value
+  try { state.load(); } catch (e) { console.warn('state.load failed', e); }
+
+  // route-like handling for cart/recap hash
+  const removeExistingOverlays = () => {
+    document.querySelectorAll('[data-app-overlay]').forEach(n => n.remove());
+  };
+  const handleHash = () => {
+    const h = window.location.hash.replace('#','');
+    if (h === '') return; // Si pas de hash, on ne fait rien
+    
+    // On nettoie le hash pour permettre de rouvrir le même overlay
+    window.location.hash = '';
+    
+    if (h === 'cart') {
+      removeExistingOverlays();
+      const overlay = Cart();
+      document.body.appendChild(overlay);
+    } else if (h === 'recap') {
+      removeExistingOverlays();
+      const overlay = Recap();
+      document.body.appendChild(overlay);
+    }
+  };
+  window.addEventListener('hashchange', handleHash);
+  // handle initial hash
+  if (window.location.hash) handleHash();
   if (!document.getElementById("background")) {
     document.body.prepend(Background());
   }

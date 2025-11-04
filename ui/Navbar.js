@@ -1,3 +1,6 @@
+import { state } from '../state.js';
+import { Cart } from '../components/Cart.js';
+
 export function Navbar({ title = "MONOPRIX VINCI", showCart = true } = {}) {
   const nav = document.createElement("div");
   nav.className = `
@@ -54,8 +57,50 @@ export function Navbar({ title = "MONOPRIX VINCI", showCart = true } = {}) {
       </svg>
     `;
 
-    btn.onclick = () => (window.location.hash = "cart");
-    right.appendChild(btn);
+    btn.onclick = () => {
+      // If hash isn't cart, navigate to #cart (app.js will open it). If it is already #cart,
+      // hashchange won't fire, so open the cart overlay directly.
+      if (window.location.hash.replace('#','') !== 'cart') {
+        window.location.hash = 'cart';
+        return;
+      }
+      // remove existing overlays and open a fresh Cart overlay
+      document.querySelectorAll('[data-app-overlay]').forEach(n => n.remove());
+      document.body.appendChild(Cart());
+    };
+    // badge container
+    const wrapper = document.createElement('div');
+    wrapper.className = 'relative';
+    btn.setAttribute('aria-label','Ouvrir le panier');
+    wrapper.appendChild(btn);
+    const badge = document.createElement('span');
+    badge.className = `absolute -top-[1vh] -right-[1vh] text-white text-[1.4vh] font-bold rounded-full w-[3vh] h-[3vh] flex items-center justify-center shadow`;
+    badge.style.backgroundColor = '#7CE07A';
+    badge.style.display = 'none';
+    badge.setAttribute('data-cart-count','');
+    wrapper.appendChild(badge);
+    right.appendChild(wrapper);
+
+    // listen to cart updates
+    const updateBadge = (e) => {
+      const cart = (e && e.detail && e.detail.cart) || [];
+      const totalCount = cart.reduce((s,i)=>s + (Number(i.quantity)||0), 0);
+      if (totalCount > 0) {
+        badge.style.display = 'flex';
+        badge.textContent = String(totalCount);
+      } else {
+        badge.style.display = 'none';
+        badge.textContent = '';
+      }
+    };
+    window.addEventListener('cart:updated', updateBadge);
+    // initialize badge from current state immediately (state.load() may have run earlier)
+    try {
+      const current = Array.isArray(state.cart) ? state.cart : [];
+      updateBadge({ detail: { cart: current } });
+    } catch (e) {
+      // ignore
+    }
   }
 
   nav.append(left, center, right);

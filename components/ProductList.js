@@ -26,7 +26,7 @@ export function ProductList({ category = null, onSelectProduct = () => {} } = {}
   filtered.forEach((prod) => {
     const card = document.createElement("button");
     card.className = `
-      bg-white rounded-[1.5vh] shadow-md overflow-hidden
+      bg-white rounded-lg shadow-md overflow-hidden
       flex flex-col items-center justify-between
       active:scale-95 transition h-[32vh]
     `;
@@ -34,7 +34,7 @@ export function ProductList({ category = null, onSelectProduct = () => {} } = {}
     const img = document.createElement("img");
     img.src = prod.image_url || "https://via.placeholder.com/200x200?text=Produit";
     img.alt = prod.nom;
-    img.className = "w-full h-[20vh] object-contain bg-[#F3F3F3]";
+    img.className = "w-full h-[20vh] object-contain bg-[#00000]";
 
     const name = document.createElement("p");
     name.textContent = prod.nom;
@@ -43,7 +43,7 @@ export function ProductList({ category = null, onSelectProduct = () => {} } = {}
 
     const price = document.createElement("p");
     price.textContent = `${prod.prix.toFixed(2)} €`;
-    price.className = "text-[2vh] font-bold text-[#A855F7]";
+    price.className = "text-[2vh] font-bold text-primary";
 
     card.append(img, name, price);
 

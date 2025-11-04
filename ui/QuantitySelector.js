@@ -1,11 +1,13 @@
 export function QuantitySelector({ value = 1, min = 1, max = 99, onChange }) {
   // Création du wrapper principal
   const wrapper = document.createElement("div");
-  wrapper.className = "flex items-stretch h-[8vh] bg-white rounded-[1vh] overflow-hidden border border-gray-300";
+  // slightly more compact selector: lower height
+  wrapper.className = "flex items-stretch h-[6.2vh] bg-white rounded-[1vh] overflow-hidden border border-gray-300";
 
   // Affichage de la quantité (à gauche)
   const display = document.createElement("div");
-  display.className = "w-[6vh] flex items-center justify-center text-[2vh] font-semibold text-gray-700 border-r border-gray-300";
+  // narrower number display
+  display.className = "w-[6vh] flex items-center justify-center text-[1.8vh] font-semibold text-gray-700 border-r border-gray-300";
   display.textContent = value;
 
   // Conteneur des boutons (à droite, empilés)
@@ -17,9 +19,9 @@ export function QuantitySelector({ value = 1, min = 1, max = 99, onChange }) {
     const btn = document.createElement("button");
     btn.textContent = text;
     btn.className = `
-      bg-[#4B5563] text-white w-[4vh] h-[4vh]
-      text-[1.8vh] font-bold flex items-center justify-center
-      transition-colors hover:bg-[#374151]
+      bg-gray-600 text-white w-[3.6vh] h-[3.6vh]
+      text-[1.6vh] font-bold flex items-center justify-center
+      transition-colors hover:bg-gray-700
       disabled:opacity-50 disabled:cursor-not-allowed
       ${text === "+" ? "border-b" : ""} border-gray-600
     `;
