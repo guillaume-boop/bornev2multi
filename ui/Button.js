@@ -5,57 +5,64 @@ export function Button({
 	icon = null, // svg string or Node
 	onClick = () => {},
 	children = '',
-	className = '' // additional classes
+	className = '', // additional classes
+	unstyled = false // skip base styles when true
 }) {
 	const btn = document.createElement('button');
 	btn.type = 'button';
 
-	// Base styles applied directly
-	btn.style.display = 'inline-flex';
-	btn.style.alignItems = 'center';
-	btn.style.justifyContent = 'center';
-	btn.style.gap = '1vh';
-	btn.style.cursor = 'pointer';
-	btn.style.border = 'none';
-	btn.style.borderRadius = '1.2vh';
-	btn.style.transition = 'transform .08s ease, box-shadow .12s ease';
-	btn.style.fontWeight = '600';
-
-	// Variant styles
-	switch (variant) {
-		case 'primary':
-			btn.style.backgroundColor = 'rgb(126 34 206 / 0.7)';
-			btn.style.color = '#ffffff';
-			break;
-		case 'success':
-			btn.style.backgroundColor = '#7CE07A';
-			btn.style.color = '#ffffff';
-			break;
-		case 'danger':
-			btn.style.backgroundColor = 'rgb(220 38 38 / 0.9)';
-			btn.style.color = '#ffffff';
-			break;
-		case 'ghost':
-			btn.style.backgroundColor = 'transparent';
-			btn.style.color = '#111827';
-			btn.style.border = '1px solid #E5E7EB';
-			break;
+	if (!unstyled) {
+		// Base styles applied directly
+		btn.style.display = 'inline-flex';
+		btn.style.alignItems = 'center';
+		btn.style.justifyContent = 'center';
+		btn.style.gap = '1vh';
+		btn.style.cursor = 'pointer';
+		btn.style.border = 'none';
+		btn.style.borderRadius = '1.2vh';
+		btn.style.transition = 'transform .08s ease, box-shadow .12s ease';
+		btn.style.fontWeight = '600';
 	}
 
-	// Size styles
-	switch (size) {
-		case 'sm':
-			btn.style.fontSize = '1.6vh';
-			btn.style.padding = '0.6vh 1vh';
-			break;
-		case 'md':
-			btn.style.fontSize = '2vh';
-			btn.style.padding = '1.2vh 1.6vh';
-			break;
-		case 'lg':
-			btn.style.fontSize = '2.4vh';
-			btn.style.padding = '1.6vh 2vh';
-			break;
+	if (!unstyled) {
+		// Variant styles
+		switch (variant) {
+			case 'primary':
+				btn.style.backgroundColor = 'rgb(126 34 206 / 0.7)';
+				btn.style.color = '#ffffff';
+				break;
+			case 'success':
+				btn.style.backgroundColor = '#7CE07A';
+				btn.style.color = '#ffffff';
+				break;
+			case 'danger':
+				btn.style.backgroundColor = 'rgb(220 38 38 / 0.9)';
+				btn.style.color = '#ffffff';
+				break;
+			case 'ghost':
+				btn.style.backgroundColor = 'transparent';
+				btn.style.color = '#111827';
+				btn.style.border = '1px solid #E5E7EB';
+				break;
+		}
+	}
+
+	if (!unstyled) {
+		// Size styles
+		switch (size) {
+			case 'sm':
+				btn.style.fontSize = '1.6vh';
+				btn.style.padding = '0.6vh 1vh';
+				break;
+			case 'md':
+				btn.style.fontSize = '2vh';
+				btn.style.padding = '1.2vh 1.6vh';
+				break;
+			case 'lg':
+				btn.style.fontSize = '2.4vh';
+				btn.style.padding = '1.6vh 2vh';
+				break;
+		}
 	}
 
 	if (fullWidth) {

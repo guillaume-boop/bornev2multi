@@ -292,6 +292,8 @@ export function ProductModal(p, allProducts = []) {
     variant: "ghost",
     size: "md",
     children: "DESCRIPTION",
+    unstyled: true,
+    className: 'min-w-[12vh] py-[1vh] px-[2vh] bg-gray-200 rounded-[2vh] text-[1.8vh] font-medium',
     onClick: () => {
       activeTab = "description";
       updateTabs();
@@ -302,6 +304,8 @@ export function ProductModal(p, allProducts = []) {
     variant: "ghost",
     size: "md",
     children: "DETAILS",
+    unstyled: true,
+    className: 'min-w-[12vh] py-[1vh] px-[2vh] bg-gray-200 rounded-[2vh] text-[1.8vh] font-medium',
     onClick: () => {
       activeTab = "details";
       updateTabs();
@@ -311,14 +315,16 @@ export function ProductModal(p, allProducts = []) {
   const textContainer = document.createElement("p");
 
   const updateTabs = () => {
-    // Update button states based on active tab
-    descBtn.className = `btn btn--${activeTab === "description" ? "primary" : "ghost"} btn--md`;
-    detBtn.className = `btn btn--${activeTab === "details" ? "primary" : "ghost"} btn--md`;
-
-    // Render HTML when available
+    // Reset both buttons to inactive state
+    descBtn.className = 'min-w-[12vh] py-[1vh] px-[2vh] bg-gray-200 rounded-[2vh] text-[1.8vh] font-medium';
+    detBtn.className = 'min-w-[12vh] py-[1vh] px-[2vh] bg-gray-200 rounded-[2vh] text-[1.8vh] font-medium';
+    
+    // Add active state to selected tab
     if (activeTab === "description") {
+      descBtn.className = 'min-w-[12vh] py-[1vh] px-[2vh] bg-white border-2 border-primary rounded-[2vh] text-[1.8vh] font-medium';
       textContainer.innerHTML = product.shortDescription || "";
     } else {
+      detBtn.className = 'min-w-[12vh] py-[1vh] px-[2vh] bg-white border-2 border-primary rounded-[2vh] text-[1.8vh] font-medium';
       textContainer.innerHTML = product.fullDescription || "";
     }
 
